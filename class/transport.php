@@ -21,6 +21,10 @@ if (false === defined('CS_REST_PROXY')) {
     define('CS_REST_NO_PROXY', '');
   }
 
+  if (false === defined('CS_REST_PROXYUSERPWD')) {
+    define('CS_REST_PROXYUSERPWD', '');
+  }
+
 if(!function_exists("CS_REST_TRANSPORT_get_available")) {    
     function CS_REST_TRANSPORT_get_available($requires_ssl, $log) {
         if(function_exists('curl_init') && function_exists('curl_exec')) {
@@ -136,6 +140,7 @@ if (!class_exists('CS_REST_CurlTransport')) {
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, CS_REST_SOCKET_TIMEOUT);
             curl_setopt($ch, CURLOPT_TIMEOUT, CS_REST_CALL_TIMEOUT);
 
+
             $inflate_response = false;
             if($this->_curl_zlib) {
                 $this->_log->log_message('curl+zlib support available. Requesting gzipped response.',
@@ -178,6 +183,8 @@ if (!class_exists('CS_REST_CurlTransport')) {
             curl_setopt($ch, CURLOPT_PROXY, CS_REST_PROXY);
             curl_setopt($ch, CURLOPT_PROXYPORT, CS_REST_PROXY_PORT);
             curl_setopt($ch, CURLOPT_NOPROXY, CS_REST_NO_PROXY);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, CS_REST_PROXYUSERPWD);
+            
             
 
             $response = curl_exec($ch);
